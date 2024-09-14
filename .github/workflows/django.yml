@@ -25,7 +25,7 @@ jobs:
         remote_host: ${{ secrets.SSH_HOST }}
         remote_port: ${{ secrets.SSH_PORT }}
         remote_user: ${{ secrets.SSH_USER }}
-        ssh_private_key: ${{ secrets.SSH_KEY }}
+        remote_key: ${{ secrets.SSH_KEY }}
 
     # Step 3: Deploy and restart services on VPS
     - name: Deploy to VPS
