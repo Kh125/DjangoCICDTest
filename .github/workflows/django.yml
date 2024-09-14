@@ -16,6 +16,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Setup SSH Key
+      run: |
+        echo "${{ secrets.SSH_KEY }}" > id_rsa
+        chmod 600 id_rsa
+    
     - name: Copy files to VPS
       uses: burnett01/rsync-deployments@5.1
       with:
@@ -25,7 +30,7 @@ jobs:
         remote_host: ${{ secrets.SSH_HOST }}
         remote_port: ${{ secrets.SSH_PORT }}
         remote_user: ${{ secrets.SSH_USER }}
-        remote_key: ${{ secrets.SSH_KEY }}
+        remote_key: id_rsa
 
     # Step 3: Deploy and restart services on VPS
     - name: Deploy to VPS
