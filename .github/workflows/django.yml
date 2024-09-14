@@ -35,7 +35,7 @@ jobs:
     # Step 3: Deploy and restart services on VPS
     - name: Deploy to VPS
       run: |
-        ssh -i ${{ secrets.SSH_KEY }} -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+        ssh -i id_rsa -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
         cd /var/www/django-app
         # Set up virtual environment
         python3 -m venv venv
