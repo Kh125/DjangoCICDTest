@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.http import HttpResponse
 
 def hello_world(request):
-    return HttpResponse("Hello world from Django updated 2, 3, blah!")
+    return HttpResponse("Hello world from Django updated with supervisor command include!")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
