@@ -1,0 +1,41 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Copy files to VPS
+      uses: burnett01/rsync-deployments@5.1
+      with:
+        switches: -avzr --delete
+        path: ./  # Local directory to deploy
+        remote_path: /var/www/django-app  # Path on VPS
+        remote_host: ${{ secrets.SSH_HOST }}
+        remote_port: ${{ secrets.SSH_PORT }}
+        remote_user: ${{ secrets.SSH_USER }}
+        remote_key: ${{ secrets.SSH_KEY }}
+
+    # Step 3: Deploy and restart services on VPS
+    - name: Deploy to VPS
+      run: |
+        ssh -i ${{ secrets.SSH_KEY }} -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+        cd /var/www/django-app
+        # Set up virtual environment
+        python3 -m venv venv
+        source venv/bin/activate
+        # Install dependencies
+        pip install -r requirements.txt
+        EOF
+
