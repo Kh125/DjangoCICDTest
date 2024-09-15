@@ -39,4 +39,7 @@ jobs:
         source venv/bin/activate
         # Install dependencies
         pip install -r requirements.txt
+        # Reload and Update Supervisor for Changes
+        sudo supervisorctl reload
+        sudo supervisorctl update
         EOF
