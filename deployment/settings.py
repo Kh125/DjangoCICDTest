@@ -20,8 +20,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
-    'apis',
     'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,6 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    #External Apps
+    'rest_framework',
+    'corsheaders',
+    #Local Apps
+    'apis',
+    'app',
 ]
 
 MIDDLEWARE = [
@@ -92,10 +97,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Static Data Handling for production
 STATIC_URL = 'static/'
-STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 
+# whitenoise configurations
 STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -103,3 +110,14 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom User model extend to existing user model
+AUTH_USER_MODEL = 'app.User'
+
+# CORS Enabling
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+# MailHog Configurations
+EMAIL_HOST="127.0.0.1"
+EMAIL_PORT= 1025
